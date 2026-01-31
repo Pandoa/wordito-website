@@ -146,28 +146,28 @@
             .features-grid { grid-template-columns: 1fr; }
             .large { grid-column: span 1; }
         }
-		
-		#top-logo {
-			max-width: 300px;
-		}
+        
+        #top-logo {
+            max-width: 300px;
+        }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo" onclick="show('home')">
+    <div class="logo" onclick="location.hash='home'">
         <img src="logo.png" alt=""> Wordito
     </div>
     <div class="nav-links">
-        <a onclick="show('home')">Overview</a>
-        <a onclick="show('privacy')">Privacy</a>
+        <a href="#home">Overview</a>
+        <a href="#privacy">Privacy</a>
     </div>
 </nav>
 
 <main id="home-page">
     <section class="hero">
-		<img src="logo.png" alt="" id="top-logo"/>
-		
+        <img src="logo.png" alt="" id="top-logo"/>
+        
         <h1>Connect the words</h1>
         <p>A minimalist word game for the intellectually curious.</p>
         <div class="badge-container">
@@ -251,8 +251,22 @@
     function show(page) {
         document.getElementById('home-page').style.display = page === 'home' ? 'block' : 'none';
         document.getElementById('privacy-page').style.display = page === 'privacy' ? 'block' : 'none';
+        
+        if (window.location.hash.substring(1) !== page) {
+            window.location.hash = page;
+        }
         window.scrollTo(0,0);
     }
+
+    window.addEventListener('hashchange', () => {
+        const page = window.location.hash.substring(1) || 'home';
+        show(page);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const page = window.location.hash.substring(1) || 'home';
+        show(page);
+    });
 </script>
 
 </body>
